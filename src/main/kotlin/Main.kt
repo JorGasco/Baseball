@@ -13,7 +13,6 @@ import utils.ScannerInput.readNextDouble
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
 import java.io.File
-import java.lang.System.exit
 
 private val playersApi = PlayersAPI(JSONSerializer(File("notes.json")))
 
@@ -75,8 +74,8 @@ fun players(){
         when (option) {
             1 -> addPlayer()
             2-> listAllPlayers()
-            // 3  -> updateNote()
-            // 4  -> deleteNote()
+            3  -> updatePlayer()
+            4  -> deletePlayer()
 
             //6 -> searchPlayerByPosition()
 
@@ -139,3 +138,60 @@ fun addPlayer() {
         println(playersApi.listPlayers())
 
     }
+
+fun updatePlayer() {
+    //logger.info { "updateNotes() function invoked" }
+    println(playersApi.listPlayers())
+    if (playersApi.numberOfPlayers() > 0) {
+        //only ask the user to choose the note if notes exist
+        val indexToUpdate = readNextInt("Enter the index of the note to update: ")
+        if (playersApi.isValidIndex(indexToUpdate)) {
+            val playerName = readNextLine("Enter Player's Name: ")
+            val playerSurname = readNextLine("Enter Player's Surname: ")
+            val age = readNextInt("Enter Player's age: ")
+            val height = readNextDouble("Enter Player's height: ")
+            val weight = readNextDouble("Enter Player's weight: ")
+            val priority = readNextLine(
+                """
+              > --------------------------------
+              > | Choose the position           |
+              > |   1 - Infield                 |
+              > |   2 - OutField                |
+              > |   3 - Pitcher                 |
+              > --------------------------------
+     > ==>> """.trimMargin(">")
+            )
+
+            //pass the index of the note and the new note details to NoteAPI for updating and check for success.
+            if (playersApi.updatePlayer(
+                    indexToUpdate,
+                    Players(playerName, playerSurname, age, height, weight, priority, false)
+                )
+            ) {
+                println("Update Successful")
+            } else {
+                println("Update Failed")
+            }
+        } else {
+            println("There are no notes for this index number")
+        }
+    }
+}
+
+    fun deletePlayer(){
+        //logger.info { "deleteNote() function invoked" }
+        println(playersApi.listPlayers())
+        if (playersApi.numberOfPlayers() > 0) {
+            //only ask the user to choose the note to delete if notes exist
+            val indexToDelete = readNextInt("Enter the index of the player to delete: ")
+            //pass the index of the note to NoteAPI for deleting and check for success.
+            val playerToDelete = playersApi.deletePlayer(indexToDelete)
+            if (playerToDelete != null) {
+                println("Delete Successful! Deleted Player: ${playerToDelete.playerName} ${playerToDelete.playerSurname}")
+            } else {
+                println("Delete NOT Successful")
+            }
+        }
+    }
+
+
