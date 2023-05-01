@@ -27,4 +27,26 @@ class PlayersAPI(serializerType: Serializer) {
     fun isValidListIndex(index: Int, list: List<Any>): Boolean {
         return (index >= 0 && index < list.size)
     }
+
+    @Throws(Exception::class)
+    fun load() {
+        players = serializer.read() as ArrayList<Players>
+    }
+
+    @Throws(Exception::class)
+    fun store() {
+        serializer.write(players)
+    }
+
+    fun listPlayers(): String {
+        return if (players.isEmpty()) {
+            "No notes stored"
+        } else {
+            var listPlayers = ""
+            for (i in players.indices) {
+                listPlayers += "${i}: ${players[i]} \n"
+            }
+            listPlayers
+        }
+    }
 }
