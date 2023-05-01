@@ -47,7 +47,7 @@ fun playerMenu() : Int {
          > |   2) List all Players          |
          > |   3) Update a Player           |
          > |   4) Delete a Player           |
-         > |    6) Search a Player by Name  |
+         > |   5) Search a Player by Name  |
          > |                                |
          > ----------------------------------
          > |   20) Save notes               |
