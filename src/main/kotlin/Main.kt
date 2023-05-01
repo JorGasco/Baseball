@@ -111,4 +111,20 @@ fun addPlayer(){
     } else {
         println("Add Failed")
     }
+
+    /*fun deleteNote(){
+        //logger.info { "deleteNote() function invoked" }
+        //listPlayers()
+        if (PlayersAPI.numberOfPlayers() > 0) {
+            //only ask the user to choose the note to delete if notes exist
+            val indexToDelete = readNextInt("Enter the index of the player to delete: ")
+            //pass the index of the note to NoteAPI for deleting and check for success.
+            val playerToDelete = playersApi.deleteNote(indexToDelete)
+            if (playerToDelete != null) {
+                println("Delete Successful! Deleted Player: ${playerToDelete.playerName} ${playerToDelete.playerSurname}")
+            } else {
+                println("Delete NOT Successful")
+            }
+        }*/
+
 }
