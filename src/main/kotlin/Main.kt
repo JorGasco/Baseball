@@ -29,8 +29,7 @@ fun mainMenu() : Int {
          > |   1) Players                   |
          > |                                |
          > ----------------------------------
-         > |   20) Save notes               |
-         > |   21) Load notes               |
+         > |                                |
          > ----------------------------------
          > |   0) Exit                      |
          > ----------------------------------
@@ -47,7 +46,8 @@ fun playerMenu() : Int {
          > |   2) List all Players          |
          > |   3) Update a Player           |
          > |   4) Delete a Player           |
-         > |   5) Search a Player by Name  |
+         > |   5) Search a Player by Name   |
+         > | 6) Search a Player by Position |
          > |                                |
          > ----------------------------------
          > |   20) Save notes               |
@@ -76,8 +76,10 @@ fun players(){
             2-> listAllPlayers()
             3  -> updatePlayer()
             4  -> deletePlayer()
+            5  ->searchName()
+            6  ->searchPositions()
 
-            //6 -> searchPlayerByPosition()
+
 
             20 -> save()
             21 -> load()
@@ -193,5 +195,26 @@ fun updatePlayer() {
             }
         }
     }
+
+fun searchName() {
+    val searchName = readNextLine("Enter the Name to search by: ")
+    val searchResults = playersApi.searchByTitle(searchName)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
+    }
+}
+
+fun searchPositions() {
+    val searchPositions = readNextLine("Enter the Name to search by: ")
+    val searchResults = playersApi.searchByPositions(searchPositions)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
+    }
+}
+
 
 

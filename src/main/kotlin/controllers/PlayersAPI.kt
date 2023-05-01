@@ -49,10 +49,10 @@ class PlayersAPI(serializerType: Serializer) {
             listPlayers
         }
     }
-    fun isValidIndex(index: Int) :Boolean{
+
+    fun isValidIndex(index: Int): Boolean {
         return isValidListIndex(index, players);
     }
-
 
 
     fun updatePlayer(indexToUpdate: Int, players: Players?): Boolean {
@@ -86,4 +86,19 @@ class PlayersAPI(serializerType: Serializer) {
             players.removeAt(indexToDelete)
         } else null
     }
+
+
+    fun searchByTitle(searchString: String) =
+        formatListString(players.filter { player -> player.playerName.contains(searchString, ignoreCase = true) })
+
+    fun searchByPositions(searchString: String) =
+        formatListString(players.filter { player -> player.position.contains(searchString,ignoreCase=true) })
+
+
+    private fun formatListString(notesToFormat: List<Players>): String =
+        notesToFormat
+            .joinToString(separator = "\n") { player ->
+                players.indexOf(player).toString() + ": " + player.toString()
+            }
+
 }
