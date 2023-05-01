@@ -1,4 +1,0 @@
-C:\Users\jorge\IdeaProjects\Baseball\src\main\kotlin\utils\ScannerInput.kt
-C:\Users\jorge\IdeaProjects\Baseball\src\main\kotlin\models\Players.kt
-C:\Users\jorge\IdeaProjects\Baseball\src\main\kotlin\persistence\Serializer.kt
-C:\Users\jorge\IdeaProjects\Baseball\src\main\kotlin\Main.kt
