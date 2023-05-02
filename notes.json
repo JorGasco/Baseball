@@ -1,1 +1,1 @@
-{"object-stream":{"list":[""]}}
+{"object-stream":{"list":[{"models.Players":{"playerId":0,"playerName":"Jorge","playerSurname":"Gasco","age":21,"height":21,"weight":12,"position":"Infield","isNoteArchived":false,"stats":[{"@class":"linked-hash-set"}],"lastStatsId":0}}]}}

@@ -3,6 +3,8 @@
 
 import controllers.PlayersAPI
 import models.Players
+import models.Stats
+
 //import mu.KotlinLogging
 import persistence.JSONSerializer
 
@@ -27,7 +29,7 @@ fun mainMenu() : Int {
          > ----------------------------------
          > | NOTE MENU                      |
          > |   1) Players                   |
-         > |                                |
+         > |   2) Stats                     |
          > ----------------------------------
          > |                                |
          > ----------------------------------
@@ -58,11 +60,35 @@ fun playerMenu() : Int {
          > ==>> """.trimMargin(">"))
 }
 
+fun statsMenu() : Int {
+    return readNextInt(""" 
+         > ----------------------------------
+         > |        NOTE KEEPER APP         |
+         > ----------------------------------
+         > | SUB MENU                           |
+         > | Stats MENU                          | 
+         > |   1) Add item to a note            |
+         > |   7) Update item contents on a note|
+         > |   8) Delete item from a note       |
+         > |                                    |
+         > ----------------------------------
+         > |   20) Save notes               |
+         > |   21) Load notes               |
+         > ----------------------------------
+         > |   0) Exit                      |
+         > ----------------------------------
+         > ==>> """.trimMargin(">"))
+}
+
 fun runMenu() {
     do {
         val option = mainMenu()
         when (option) {
             1  -> players()
+            2 -> stats()
+
+            20 -> save()
+            21 -> load()
             else -> println("Invalid option entered: ${option}")
         }
     } while (true)
@@ -80,6 +106,20 @@ fun players(){
             6  ->searchPositions()
 
 
+
+            20 -> save()
+            21 -> load()
+            // 0  -> exitApp()
+            else -> println("Invalid option entered: ${option}")
+        }
+    } while (true)
+}
+
+fun stats(){
+    do {
+        val option = statsMenu()
+        when (option) {
+            1 -> addStatsToPlayer()
 
             20 -> save()
             21 -> load()
@@ -110,7 +150,7 @@ fun addPlayer() {
               > --------------------------------
      > ==>> """.trimMargin(">")
     )
-    val isAdded = playersApi.add(Players(playerName, playerSurname, age, height, weight, position, false))
+    val isAdded = playersApi.add(Players(playerName= playerName, playerSurname = playerSurname, age = age, height = height, weight = weight, position=position, isNoteArchived = false))
 
     if (isAdded) {
         println("Added Successfully")
@@ -153,7 +193,7 @@ fun updatePlayer() {
             val age = readNextInt("Enter Player's age: ")
             val height = readNextDouble("Enter Player's height: ")
             val weight = readNextDouble("Enter Player's weight: ")
-            val priority = readNextLine(
+            val position = readNextLine(
                 """
               > --------------------------------
               > | Choose the position           |
@@ -167,8 +207,8 @@ fun updatePlayer() {
             //pass the index of the note and the new note details to NoteAPI for updating and check for success.
             if (playersApi.updatePlayer(
                     indexToUpdate,
-                    Players(playerName, playerSurname, age, height, weight, priority, false)
-                )
+                    Players(playerName= playerName, playerSurname = playerSurname, age = age, height = height, weight = weight, position=position, isNoteArchived = false)
+                    )
             ) {
                 println("Update Successful")
             } else {
@@ -178,6 +218,27 @@ fun updatePlayer() {
             println("There are no notes for this index number")
         }
     }
+}
+fun addStatsToPlayer() {
+    listAllPlayers()
+    if (playersApi.numberOfPlayers() > 0) {
+        // only ask the user to choose the player if players exist
+        val playerId = readNextInt("Enter the ID of the player to add stats to: ")
+        if (playersApi.isValidId(playerId)) {
+            val player = playersApi.findPlayer(playerId)
+            if (player != null) {
+                val hits = readNextInt("\t Number of Hits:")
+                val baseOnBall = readNextInt("\t Number of Base on Balls:")
+                val strikeouts = readNextInt("\t Number of Strikeouts:")
+                if (player.addStats(Stats(hits = hits, baseOnBall = baseOnBall, strikeouts = strikeouts))) {
+                    println("Add Successful")
+                } else {
+                    println("Add not Successful")
+                }
+            }
+        }
+    }
+
 }
 
     fun deletePlayer(){
@@ -198,7 +259,7 @@ fun updatePlayer() {
 
 fun searchName() {
     val searchName = readNextLine("Enter the Name to search by: ")
-    val searchResults = playersApi.searchByTitle(searchName)
+    val searchResults = playersApi.searchByPlayersName(searchName)
     if (searchResults.isEmpty()) {
         println("No notes found")
     } else {
@@ -214,7 +275,15 @@ fun searchPositions() {
     } else {
         println(searchResults)
     }
+
+
 }
+
+
+
+
+
+
 
 
 

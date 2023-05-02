@@ -1,7 +1,9 @@
 package controllers
 
 import models.Players
+import models.Stats
 import persistence.Serializer
+import java.util.ArrayList
 
 class PlayersAPI(serializerType: Serializer) {
 
@@ -9,8 +11,12 @@ class PlayersAPI(serializerType: Serializer) {
 
     private var players = ArrayList<Players>()
 
+    private var lastId=0
+    private fun getId()=lastId++
+
     fun add(p: Players): Boolean {
-        return this.players.add(p)
+        p.playerId = getId()
+        return players.add(p)
     }
 
     fun numberOfPlayers(): Int {
@@ -88,7 +94,7 @@ class PlayersAPI(serializerType: Serializer) {
     }
 
 
-    fun searchByTitle(searchString: String) =
+    fun searchByPlayersName(searchString: String) =
         formatListString(players.filter { player -> player.playerName.contains(searchString, ignoreCase = true) })
 
     fun searchByPositions(searchString: String) =
@@ -101,4 +107,7 @@ class PlayersAPI(serializerType: Serializer) {
                 players.indexOf(player).toString() + ": " + player.toString()
             }
 
+    fun isValidId(playerId: Int): Boolean {
+        return players.any { it.playerId == playerId }
+    }
 }
