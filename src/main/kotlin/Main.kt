@@ -5,7 +5,7 @@ import controllers.PlayersAPI
 import models.Players
 import models.Stats
 
-//import mu.KotlinLogging
+import mu.KotlinLogging
 import persistence.JSONSerializer
 
 
@@ -22,28 +22,13 @@ fun main(args: Array<String>) {
     runMenu()
 }
 
+
 fun mainMenu() : Int {
     return readNextInt(""" 
          > ----------------------------------
-         > |        NOTE KEEPER APP         |
+         > |   Manager Baseball APP         |
          > ----------------------------------
-         > | NOTE MENU                      |
-         > |   1) Players                   |
-         > |   2) Stats                     |
-         > ----------------------------------
-         > |                                |
-         > ----------------------------------
-         > |   0) Exit                      |
-         > ----------------------------------
-         > ==>> """.trimMargin(">"))
-}
-
-fun playerMenu() : Int {
-    return readNextInt(""" 
-         > ----------------------------------
-         > |        NOTE KEEPER APP         |
-         > ----------------------------------
-         > | SUB MENU                       |
+         > | Player MENU                    |
          > |   1) Add a Player              |
          > |   2) List all Players          |
          > |   3) Update a Player           |
@@ -51,79 +36,38 @@ fun playerMenu() : Int {
          > |   5) Search a Player by Name   |
          > | 6) Search a Player by Position |
          > |                                |
+         > > -------------------------------|
+         > |        Stats Part              |
+         > ----------------------------------
+         > |   7) Add Stats to a Player     |
+         > |  8) List of players with Stats |
          > ----------------------------------
          > |   20) Save notes               |
          > |   21) Load notes               |
          > ----------------------------------
-         > |   0) Exit                      |
+         > |   9) Back                      |
          > ----------------------------------
          > ==>> """.trimMargin(">"))
 }
 
-fun statsMenu() : Int {
-    return readNextInt(""" 
-         > ----------------------------------
-         > |        NOTE KEEPER APP         |
-         > ----------------------------------
-         > | SUB MENU                           |
-         > | Stats MENU                          | 
-         > |   1) Add item to a note            |
-         > |   7) Update item contents on a note|
-         > |   8) Delete item from a note       |
-         > |                                    |
-         > ----------------------------------
-         > |   20) Save notes               |
-         > |   21) Load notes               |
-         > ----------------------------------
-         > |   0) Exit                      |
-         > ----------------------------------
-         > ==>> """.trimMargin(">"))
-}
 
 fun runMenu() {
     do {
-        val option = mainMenu()
-        when (option) {
-            1  -> players()
-            2 -> stats()
 
-            20 -> save()
-            21 -> load()
-            else -> println("Invalid option entered: ${option}")
-        }
-    } while (true)
-}
+        when (val option = mainMenu()) {
 
-fun players(){
-    do {
-        val option = playerMenu()
-        when (option) {
             1 -> addPlayer()
-            2-> listAllPlayers()
-            3  -> updatePlayer()
-            4  -> deletePlayer()
-            5  ->searchName()
-            6  ->searchPositions()
+            2 -> listAllPlayers()
+            3 -> updatePlayer()
+            4 -> deletePlayer()
+            5 -> searchName()
+            6 -> searchPositions()
+            7 -> addStatsToPlayer()
 
-
-
-            20 -> save()
-            21 -> load()
-            // 0  -> exitApp()
-            else -> println("Invalid option entered: ${option}")
-        }
-    } while (true)
-}
-
-fun stats(){
-    do {
-        val option = statsMenu()
-        when (option) {
-            1 -> addStatsToPlayer()
+            8 -> listAllPlayerswithStats()
 
             20 -> save()
             21 -> load()
-            // 0  -> exitApp()
             else -> println("Invalid option entered: ${option}")
         }
     } while (true)
@@ -131,9 +75,7 @@ fun stats(){
 
 fun addPlayer() {
     //logger.info { "addNote() function invoked" }
-    //val noteTitle = readNextLine("Enter a title for the note: ")
-    //val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
-    //val noteCategory = readNextLine("Enter a category for the note: ")
+
 
     val playerName = ScannerInput.readNextLine("Enter Player's Name: ")
     val playerSurname = ScannerInput.readNextLine("Enter Player's Surname: ")
@@ -150,7 +92,7 @@ fun addPlayer() {
               > --------------------------------
      > ==>> """.trimMargin(">")
     )
-    val isAdded = playersApi.add(Players(playerName= playerName, playerSurname = playerSurname, age = age, height = height, weight = weight, position=position, isNoteArchived = false))
+    val isAdded = playersApi.add(Players(playerName=playerName, playerSurname = playerSurname, age = age, height = height, weight = weight, position=position, isNoteArchived = false))
 
     if (isAdded) {
         println("Added Successfully")
@@ -179,6 +121,9 @@ fun addPlayer() {
     fun listAllPlayers() {
         println(playersApi.listPlayers())
 
+    }
+fun listAllPlayerswithStats() {
+    println(playersApi.listPlayers())
     }
 
 fun updatePlayer() {
@@ -215,10 +160,11 @@ fun updatePlayer() {
                 println("Update Failed")
             }
         } else {
-            println("There are no notes for this index number")
+            println("There are no Players for this index number")
         }
     }
 }
+
 fun addStatsToPlayer() {
     listAllPlayers()
     if (playersApi.numberOfPlayers() > 0) {
@@ -271,12 +217,10 @@ fun searchPositions() {
     val searchPositions = readNextLine("Enter the Name to search by: ")
     val searchResults = playersApi.searchByPositions(searchPositions)
     if (searchResults.isEmpty()) {
-        println("No notes found")
+        println("No Players found")
     } else {
         println(searchResults)
     }
-
-
 }
 
 

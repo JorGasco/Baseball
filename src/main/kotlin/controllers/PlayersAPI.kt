@@ -11,6 +11,9 @@ class PlayersAPI(serializerType: Serializer) {
 
     private var players = ArrayList<Players>()
 
+
+
+
     private var lastId=0
     private fun getId()=lastId++
 
@@ -55,6 +58,10 @@ class PlayersAPI(serializerType: Serializer) {
             listPlayers
         }
     }
+
+
+
+
 
     fun isValidIndex(index: Int): Boolean {
         return isValidListIndex(index, players);
