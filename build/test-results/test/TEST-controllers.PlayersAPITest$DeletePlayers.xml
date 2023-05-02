@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="controllers.PlayersAPITest$DeletePlayers" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-05-02T02:25:50" hostname="LAPTOP-V0RRUT35" time="0.003">
+<testsuite name="controllers.PlayersAPITest$DeletePlayers" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-05-02T04:00:05" hostname="LAPTOP-V0RRUT35" time="0.004">
   <properties/>
-  <testcase name="deleting a Player that does not exist, returns null()" classname="controllers.PlayersAPITest$DeletePlayers" time="0.001"/>
+  <testcase name="deleting a Player that does not exist, returns null()" classname="controllers.PlayersAPITest$DeletePlayers" time="0.002"/>
   <testcase name="deleting a  Player exists delete and returns deleted object()" classname="controllers.PlayersAPITest$DeletePlayers" time="0.001"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
