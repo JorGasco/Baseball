@@ -1,1 +1,1 @@
-{"object-stream":{"list":[""]}}
+{"object-stream":{"list":[{"models.Players":[{"playerId":0,"playerName":"samoidjasod","playerSurname":"doiajsiodjaos","age":21,"height":21,"weight":21,"position":"infield","isNoteArchived":false,"stats":[{"@class":"linked-hash-set"}],"lastStatsId":0},{"playerId":1,"playerName":"Jorge","playerSurname":"gasco","age":12,"height":12,"weight":12,"position":"Pitcher","isNoteArchived":false,"stats":[{"@class":"linked-hash-set"}],"lastStatsId":0}]}]}}
